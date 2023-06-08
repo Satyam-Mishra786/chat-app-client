@@ -12,21 +12,22 @@
 }
 
 .loginContainer {
-  width: clamp(300px, 500px, 500px);
-  height: 80vh;
+  width: 500px;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
   border: 1px solid var(--text-primary);
   padding: 20px 50px;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: var(--bg-secondary);
+
+
 }
+
 .loginHead {
-  /* font-size: 3rem; */
   text-decoration: underline;
-  /* text-shadow: 3px; */
 }
 
 .wrapper {
@@ -107,4 +108,22 @@
 
 .registerWrapper{
     gap: 20px;
+}
+
+
+@media (max-width:600px){
+  .loginContainer{
+    width: 80vw;
+      padding: 10px 30px;
+  }
+
+  .loginHead{
+    font-size: 2.5rem;
+  }
+
+  .btn-Submit{
+    font-size: 1.2rem;
+    width: fit-content;
+    height: 50px;
+  }
 }

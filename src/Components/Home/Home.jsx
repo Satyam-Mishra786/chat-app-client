@@ -1,29 +1,27 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
 import "./home.css";
-import UserContext from "../../UserContext";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useContext(UserContext);
 
-  useEffect(() => {
-    let localUser = localStorage.getItem("user");
-    if (!localUser) {
-      navigate("/auth/login");
-      return;
-    }
-    localUser = JSON.parse(localUser);
-    setUser(localUser);
-    navigate("/chat");
-  }, [navigate, setUser]);
+  // useEffect(() => {
+  //   let localUser = localStorage.getItem("user");
+  //   if (!localUser) {
+  //     navigate("/auth/login");
+  //     return;
+  //   }
+  //   localUser = JSON.parse(localUser);
+  //   setUser(localUser);
+  //   navigate("/chat");
+  // }, [navigate, setUser]);
 
-  useEffect(() => {
-    if (user?.token) {
-      navigate("/chat");
-      console.log(user);
-    }
-  }, [navigate, user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate("/chat");
+  //     console.log(user);
+  //   }
+  // }, [navigate, user]);
 
   return (
     <div className="home">

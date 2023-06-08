@@ -4,29 +4,12 @@ import Register from './Components/Login/Register'
 import UserContext from './UserContext'
 
 import {
-  createBrowserRouter,
-  RouterProvider,
+  Routes, Route,
+  BrowserRouter
 } from "react-router-dom"
 import Message from './Components/Message/Message'
 import Home from './Components/Home/Home'
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Home />,  
-  },
-  {
-    path: '/chat',
-    element: <Message />
-  },
-  {
-    path: '/auth/login',
-    element: <Login />
-  },
-  {
-    path: '/auth/register',
-    element: <Register />
-  }
-])
+
 
 const App = () => {
   const [user, setUser] = useState('Guest')
@@ -34,7 +17,20 @@ const App = () => {
   return (
 
     <UserContext.Provider value={{ user, setUser }}>
-      <RouterProvider router={router} />
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path='auth'>
+            <Route index element={<Login />} />
+            <Route path='login' element={<Login />} />
+            <Route path='register' element={<Register />} />
+          </Route>
+          <Route path='chat' element={<Message />} />
+        </Routes>
+        <Routes>
+
+        </Routes>
+      </BrowserRouter>
     </UserContext.Provider>
   )
 }
