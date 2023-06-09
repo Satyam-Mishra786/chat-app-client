@@ -12,7 +12,7 @@ import Home from './Components/Home/Home'
 
 
 const App = () => {
-  const [user, setUser] = useState('Guest')
+  const [user, setUser] = useState(null)
 
   return (
 
@@ -25,7 +25,7 @@ const App = () => {
             <Route path='login' element={<Login />} />
             <Route path='register' element={<Register />} />
           </Route>
-          <Route path='chat' element={<Message />} />
+          <Route path='chat/*' element={<Message />} />
         </Routes>
         <Routes>
 

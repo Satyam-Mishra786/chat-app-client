@@ -3,35 +3,39 @@ import Chat from "../Chat/Chat";
 import send from "../../img/send.png";
 
 import axios from "axios";
+import { useNavigate, useParams } from "react-router";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const Conversation = ({
   friendList,
   friendNumber,
+  setFriendNumber,
   handleSend,
   currentChat,
   setCurrentChat,
 }) => {
   const chatBottomRef = useRef(null);
   const [message, setMessage] = useState("");
+  const { conversationId } = useParams();
+  const navigate = useNavigate();
+  console.log(conversationId);
 
   // Get message for a conversation
   useEffect(() => {
-    if (friendList.length === 0) return;
-
     const getMessages = () => {
       axios
-        .get(
-          `${SERVER_URL}/api/message/${friendList[friendNumber]?.conversationId}`
-        )
+        .get(`${SERVER_URL}/api/message/${conversationId}`)
         .then((res) => {
           const data = res.data.messages;
           setCurrentChat(data);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     };
     getMessages();
-  }, [friendList, friendNumber, setCurrentChat]);
+  }, [setCurrentChat, conversationId]);
 
   useEffect(() => {
     scrollToBottom();
@@ -40,11 +44,23 @@ const Conversation = ({
   const scrollToBottom = () => {
     chatBottomRef?.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const handleBack = async () => {
+    setCurrentChat([]);
+    setFriendNumber(null);
+  };
+  useEffect(() => {
+    if (friendNumber === null) {
+      navigate("/chat/friends");
+    }
+  }, [friendNumber, navigate]);
+
   return (
     <div className="conversation">
       {friendNumber >= 0 ? (
         <>
           <div className="chatHead">
+            <span onClick={() => handleBack()}>Arrow</span>
             {friendList[friendNumber]?.name.toUpperCase()}
           </div>
           <Chat chatBottomRef={chatBottomRef} currentChat={currentChat} />

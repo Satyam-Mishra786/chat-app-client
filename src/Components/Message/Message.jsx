@@ -6,7 +6,7 @@ import axios from "axios";
 
 import Friends from "../Friends/Friends";
 import Conversation from "../Conversation/Conversation";
-import { Outlet, Route, Routes } from "react-router";
+import { Route, Routes, useNavigate } from "react-router";
 
 const SOCKET_IO_URL = process.env.REACT_APP_SOCKET_IO_URL;
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
@@ -18,10 +18,14 @@ const Message = () => {
 
   const socket = useRef(null);
   const { user } = useContext(UserContext);
-
+  const navigate = useNavigate();
   useEffect(() => {
     socket.current = io(`${SOCKET_IO_URL}`);
   }, []);
+
+  useEffect(() => {
+    navigate("/chat/friends");
+  }, [navigate]);
 
   const handleSend = () => {
     const messageToSend = document.querySelector(".inputMessage").textContent;
@@ -67,6 +71,10 @@ const Message = () => {
   };
 
   useEffect(() => {
+    if (!friendList[friendNumber]?.conversationId) return;
+    navigate(`/chat/conversation/${friendList[friendNumber]?.conversationId}`);
+  }, [friendNumber, friendList, navigate]);
+  useEffect(() => {
     if (friendList[friendNumber]?.conversationId) {
       socket?.current.emit(
         "joinRoom",
@@ -76,26 +84,35 @@ const Message = () => {
   }, [friendNumber, friendList]);
 
   return (
-    <Routes>
-      <Route
-        path="friends"
-        element={<Friends />}
-        friendList={friendList}
-        friendNumber={friendNumber}
-        setFriendList={setFriendList}
-        handleConversation={handleConversation}
-      />
-      <Route
-        path=":conversationId"
-        element={<Conversation />}
-        friendList={friendList}
-        friendNumber={friendNumber}
-        handleSend={handleSend}
-        currentChat={currentChat}
-        setCurrentChat={setCurrentChat}
-      />
-      <Outlet />
-    </Routes>
+    <>
+      <h1>Message Components</h1>
+      <Routes>
+        <Route
+          path="friends"
+          element={
+            <Friends
+              friendList={friendList}
+              friendNumber={friendNumber}
+              setFriendList={setFriendList}
+              handleConversation={handleConversation}
+            />
+          }
+        />
+        <Route
+          path="/conversation/:conversationId"
+          element={
+            <Conversation
+              currentChat={currentChat}
+              setCurrentChat={setCurrentChat}
+              friendList={friendList}
+              friendNumber={friendNumber}
+              handleSend={handleSend}
+              setFriendNumber={setFriendNumber}
+            />
+          }
+        />
+      </Routes>
+    </>
   );
 };
 

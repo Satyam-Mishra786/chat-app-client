@@ -38,7 +38,7 @@ const Friends = ({
     <>
       <AddFriend />
       <div className="userList">
-        {friendList.length > 0 &&
+        {friendList?.length > 0 &&
           friendList.map((friend, index) => (
             <div
               className={friendNumber === index ? "cards selected" : "cards"}
