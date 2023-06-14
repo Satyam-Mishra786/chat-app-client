@@ -14,7 +14,7 @@ const Login = () => {
     e.preventDefault();
     console.log("Logging in");
     axios
-      .post(`${SERVER_URL}/api/auth/login`, {
+      .post(`${SERVER_URL}api/auth/login`, {
         email: document.getElementById("inputEmail").value,
         password: document.getElementById("inputPass").value,
       })
