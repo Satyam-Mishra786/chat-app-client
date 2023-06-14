@@ -24,7 +24,7 @@ const Message = () => {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    socket.current = io(`${SOCKET_IO_URL}`);
+    socket.current = io(SOCKET_IO_URL);
   }, []);
 
   useEffect(() => {

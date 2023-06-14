@@ -12,6 +12,7 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    console.log("Logging in");
     axios
       .post(`${SERVER_URL}/api/auth/login`, {
         email: document.getElementById("inputEmail").value,
