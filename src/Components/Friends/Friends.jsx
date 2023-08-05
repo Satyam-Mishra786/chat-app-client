@@ -4,7 +4,8 @@ import AddFriend from "./AddFriend";
 import axios from "axios";
 import UserContext from "../../UserContext";
 
-const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+import { SERVER_URL } from "../..";
+
 
 const Friends = ({
   friendList,

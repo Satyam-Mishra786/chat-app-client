@@ -17,6 +17,7 @@ const App = () => {
   return (
 
     <UserContext.Provider value={{ user, setUser }}>
+
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />

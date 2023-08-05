@@ -1,11 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import Chat from "../Chat/Chat";
 import send from "../../img/send.png";
 
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 
-const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+import { SERVER_URL } from "../..";
+import UserContext from "../../UserContext";
 
 const Conversation = ({
   friendList,
@@ -15,12 +16,16 @@ const Conversation = ({
   currentChat,
   setCurrentChat,
 }) => {
+  const { user } = useContext(UserContext);
   const chatBottomRef = useRef(null);
   const [message, setMessage] = useState("");
   const { conversationId } = useParams();
   const navigate = useNavigate();
   console.log(conversationId);
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
   // Get message for a conversation
   useEffect(() => {
     const getMessages = () => {
@@ -48,6 +53,7 @@ const Conversation = ({
   const handleBack = async () => {
     setCurrentChat([]);
     setFriendNumber(null);
+    navigate("/chat/friends");
   };
   useEffect(() => {
     if (friendNumber === null) {

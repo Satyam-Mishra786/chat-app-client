@@ -4,7 +4,8 @@ import { useNavigate } from "react-router";
 import UserContext from "../../UserContext";
 import axios from "axios";
 
-const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+import { SERVER_URL } from "../..";
+
 
 const Login = () => {
   const { setUser } = useContext(UserContext);

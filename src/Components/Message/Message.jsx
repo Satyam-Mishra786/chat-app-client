@@ -8,8 +8,7 @@ import Friends from "../Friends/Friends";
 import Conversation from "../Conversation/Conversation";
 import { Route, Routes, useNavigate } from "react-router";
 
-const SOCKET_IO_URL = process.env.REACT_APP_SOCKET_IO_URL;
-const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+import { SERVER_URL } from "../..";
 
 const Message = () => {
   const [friendNumber, setFriendNumber] = useState(-1);
@@ -20,7 +19,7 @@ const Message = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   useEffect(() => {
-    socket.current = io(`${SOCKET_IO_URL}`);
+    socket.current = io(`${SERVER_URL}`);
   }, []);
 
   useEffect(() => {

@@ -10,3 +10,4 @@ root.render(
   </React.StrictMode>
 );
 
+export const SERVER_URL = 'http://localhost:5000'
