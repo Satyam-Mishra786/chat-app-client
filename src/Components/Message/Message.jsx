@@ -8,8 +8,7 @@ import Conversations from "../Conversations/Conversations";
 
 import send from "../../img/send.png";
 import { useNavigate } from "react-router";
-const SOCKET_IO_URL = process.env.REACT_APP_SOCKET_IO_URL;
-const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+import { SERVER_URL } from "../..";
 
 const Message = () => {
   const [room, setRoom] = useState("");
@@ -24,7 +23,7 @@ const Message = () => {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    socket.current = io(SOCKET_IO_URL);
+    socket.current = io(SERVER_URL);
   }, []);
 
   useEffect(() => {

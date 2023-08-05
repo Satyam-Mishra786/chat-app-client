@@ -2,7 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 
-const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+import { SERVER_URL } from "../..";
+
 
 const Register = () => {
   const [aboutUser, setAboutUser] = useState({
