@@ -1,33 +1,24 @@
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Rajdhani', sans-serif;
-  scroll-behavior: smooth;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .btn-primary {
+      @apply min-w-fit py-2 px-4 border-[1px] bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+    }
+    .btn-primary-sm {
+      @apply min-w-fit py-1 text-sm px-4 border-[1px] bg-blue-500 text-white  rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+    }
+
+    .my-container{
+        @apply py-11 container flex flex-col  justify-around items-center my-auto h-4/5 border-solid border-2 border-stone-900 bg-sky-500 px-3.5 rounded-xl;
+    }
+
+    .chat-item{
+      @apply max-w-[60%] rounded-md text-slate-100 self-start py-[3px] px-2 text-lg;
+    }
 }
 
-:root{
-  --text-primary:#FFFFF0;
-  --bg-primary:#35373f ;
-  --bg-secondary:#434345;
-}
-
-/* custom scrollbar */
-::-webkit-scrollbar {
-  width: 20px;
-}
-
-::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #d6dee1;
-  border-radius: 20px;
-  border: 6px solid transparent;
-  background-clip: content-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: #a8bbbf;
+.my-scroll-bar::-webkit-scrollbar{
+    width: 0px;
 }

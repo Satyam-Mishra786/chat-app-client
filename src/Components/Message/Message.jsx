@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import "./message.css";
 import { io } from "socket.io-client";
 import UserContext from "../../UserContext";
 import axios from "axios";
@@ -83,8 +82,7 @@ const Message = () => {
   }, [friendNumber, friendList]);
 
   return (
-    <>
-      <h1>Message Components</h1>
+    <div className="border-solid border-2 border-stone-900 h-4/5 w-full  rounded-xl">
       <Routes>
         <Route
           path="friends"
@@ -111,7 +109,7 @@ const Message = () => {
           }
         />
       </Routes>
-    </>
+    </div>
   );
 };
 

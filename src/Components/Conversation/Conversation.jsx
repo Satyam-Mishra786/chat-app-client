@@ -1,46 +1,67 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import Chat from "../Chat/Chat";
-import send from "../../img/send.png";
-
-import axios from "axios";
 import { useNavigate, useParams } from "react-router";
+import axios from "axios";
+import UserContext from "../../UserContext";
+
+import { BiLeftArrowAlt } from "react-icons/bi";
+import { AiOutlineSend } from "react-icons/ai";
 
 import { SERVER_URL } from "../..";
-import UserContext from "../../UserContext";
+import Chat from "../Chat/Chat";
+import Spinner from "../Spinner/Spinner";
+
+import { useQuery } from "react-query";
+
+const fetchMessage = (conversationId) => {
+  return axios.get(`${SERVER_URL}/api/message/${conversationId}`);
+};
 
 const Conversation = ({
   friendList,
   friendNumber,
   setFriendNumber,
   handleSend,
-  currentChat,
-  setCurrentChat,
+  // currentChat,
+  // setCurrentChat,
 }) => {
   const { user } = useContext(UserContext);
   const chatBottomRef = useRef(null);
   const [message, setMessage] = useState("");
   const { conversationId } = useParams();
   const navigate = useNavigate();
-  console.log(conversationId);
+  // const [isLoading, setIsLoading] = useState(false);
 
+  const { data: currentChat, isLoading } = useQuery(
+    ["messages", conversationId],
+    () => fetchMessage(conversationId)
+  );
+
+  // console.log(conversationId);
+
+  function capitalizeFirstLetter(str) {
+    return str?.charAt(0).toUpperCase() + str?.slice(1);
+  }
   useEffect(() => {
     console.log(user);
   }, [user]);
   // Get message for a conversation
-  useEffect(() => {
-    const getMessages = () => {
-      axios
-        .get(`${SERVER_URL}/api/message/${conversationId}`)
-        .then((res) => {
-          const data = res.data.messages;
-          setCurrentChat(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    getMessages();
-  }, [setCurrentChat, conversationId]);
+  // useEffect(() => {
+  //   const getMessages = () => {
+  //     setIsLoading(true);
+  //     axios
+  //       .get(`${SERVER_URL}/api/message/${conversationId}`)
+  //       .then((res) => {
+  //         const data = res.data.messages;
+  //         setIsLoading(false);
+  //         setCurrentChat(data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         setIsLoading(false);
+  //       });
+  //   };
+  //   getMessages();
+  // }, [setCurrentChat, conversationId]);
 
   useEffect(() => {
     scrollToBottom();
@@ -51,7 +72,6 @@ const Conversation = ({
   };
 
   const handleBack = async () => {
-    setCurrentChat([]);
     setFriendNumber(null);
     navigate("/chat/friends");
   };
@@ -62,38 +82,35 @@ const Conversation = ({
   }, [friendNumber, navigate]);
 
   return (
-    <div className="conversation">
-      {friendNumber >= 0 ? (
-        <>
-          <div className="chatHead">
-            <span onClick={() => handleBack()}>Arrow</span>
-            {friendList[friendNumber]?.name.toUpperCase()}
-          </div>
-          <Chat chatBottomRef={chatBottomRef} currentChat={currentChat} />
-          <div className="sendMessage">
-            <div
-              role="textbox"
-              contentEditable="true"
-              type="text"
-              className="inputMessage"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            ></div>
-            <button className="sendBtn" onClick={handleSend}>
-              <img src={send} alt="Send" className="send" />
-            </button>
-          </div>
-        </>
+    <div className="box-border w-full h-full relative rounded-xl my-scroll-bar">
+      <div className="h-[12%] border-b-2 border-black sticky top-0 w-full flex flex-row items-center gap-6 bg-slate-200 rounded-tl-xl rounded-tr-xl">
+        <span onClick={() => handleBack()} className="w-8 cursor-pointer">
+          <BiLeftArrowAlt size={50} />
+        </span>
+        <span className="text-2xl">
+          {capitalizeFirstLetter(friendList[friendNumber]?.name)}
+        </span>
+      </div>
+      {isLoading ? (
+        <div className="h-[78%] w-full flex items-center justify-center">
+          <Spinner />
+        </div>
       ) : (
-        <h1
-          style={{
-            backgroundColor: "var(--bg-primary)",
-            color: "var(--text-primary)",
-          }}
-        >
-          Select a Conversation
-        </h1>
+        <Chat chatBottomRef={chatBottomRef} currentChat={currentChat} />
       )}
+      <div className="h-[10%] gap-2 p-1 flex flex-row border-t-2 border-t-black rounded-bl-xl rounded-br-xl sticky bottom-[-100%] left-0">
+        <div
+          role="textbox"
+          contentEditable="true"
+          type="text"
+          className="inputMessage border-2 px-2 leading-6 border-black rounded-full outline-none w-[90%] overflow-y-scroll my-scroll-bar"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        ></div>
+        <div className="w-[10%] cursor-pointer" onClick={handleSend}>
+          <AiOutlineSend className="w-full h-full" />
+        </div>
+      </div>
     </div>
   );
 };

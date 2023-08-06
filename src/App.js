@@ -17,7 +17,7 @@ const App = () => {
   return (
 
     <UserContext.Provider value={{ user, setUser }}>
-
+      <div className='max-w-md bg-slate-100 mx-auto flex justify-center items-center h-screen'>
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />
@@ -32,6 +32,7 @@ const App = () => {
 
         </Routes>
       </BrowserRouter>
+      </div>
     </UserContext.Provider>
   )
 }
