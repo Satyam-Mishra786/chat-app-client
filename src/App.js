@@ -2,40 +2,41 @@ import React, { useState } from 'react'
 import Login from './Components/Login/Login'
 import Register from './Components/Login/Register'
 import UserContext from './UserContext'
+import { QueryClientProvider, QueryClient } from 'react-query'
 
 import {
-  createBrowserRouter,
-  RouterProvider,
+  Routes, Route,
+  BrowserRouter
 } from "react-router-dom"
 import Message from './Components/Message/Message'
 import Home from './Components/Home/Home'
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Home />,  
-  },
-  {
-    path: '/chat',
-    element: <Message />
-  },
-  {
-    path: '/auth/login',
-    element: <Login />
-  },
-  {
-    path: '/auth/register',
-    element: <Register />
-  }
-])
+
+const queryClient = new QueryClient();
 
 const App = () => {
-  const [user, setUser] = useState('Guest')
+  const [user, setUser] = useState(null)
 
   return (
-
+    <QueryClientProvider client={queryClient}>
     <UserContext.Provider value={{ user, setUser }}>
-      <RouterProvider router={router} />
+      <div className='max-w-md bg-slate-100 mx-auto flex justify-center items-center h-screen'>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path='auth'>
+            <Route index element={<Login />} />
+            <Route path='login' element={<Login />} />
+            <Route path='register' element={<Register />} />
+          </Route>
+          <Route path='chat/*' element={<Message />} />
+        </Routes>
+        <Routes>
+
+        </Routes>
+      </BrowserRouter>
+      </div>
     </UserContext.Provider>
+    </QueryClientProvider>
   )
 }
 

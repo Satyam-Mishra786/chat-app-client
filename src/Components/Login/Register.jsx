@@ -28,7 +28,11 @@ const Register = () => {
     if (!aboutUser.username || !aboutUser.email || !aboutUser.password) return;
 
     axios
-      .post(`${SERVER_URL}api/auth/register`, aboutUser)
+      .post(`${SERVER_URL}/api/auth/register`, {
+        username: aboutUser.username,
+        email: aboutUser.email,
+        password: aboutUser.password,
+      })
       .then((res) => {
         alert("User Created Successfully");
         navigate("/auth/login");
@@ -39,14 +43,16 @@ const Register = () => {
   };
 
   return (
-    <div className="login register">
-      <div className="loginContainer registerContainer">
-        <h1 className="loginHead">Register User</h1>
-        <form onSubmit={handleRegister} className="wrapper registerWrapper">
-          <div className="fieldContainer">
-            <label htmlFor="username">Username : </label>
+    <div className="my-container">
+      <div className="my-wrapper">
+        <h1 className="login-head">Register User</h1>
+        <form onSubmit={handleRegister} className="my-form">
+          <div className="my-form-item">
+            <label htmlFor="username" className="form-label">
+              Username
+            </label>
             <input
-              className="input-box"
+              className="form-input"
               name="username"
               onChange={handleChange}
               autoComplete="off"
@@ -55,11 +61,13 @@ const Register = () => {
               id="username"
             />
           </div>
-          <div className="fieldContainer">
-            <label htmlFor="inputEmail">Email : </label>
+          <div className="my-form-item">
+            <label htmlFor="inputEmail" className="form-label">
+              Email
+            </label>
             <input
               autoComplete="off"
-              className="input-box"
+              className="form-input"
               name="email"
               onChange={handleChange}
               required
@@ -67,11 +75,13 @@ const Register = () => {
               id="inputEmail"
             />
           </div>
-          <div className="fieldContainer">
-            <label htmlFor="inputPass">Password : </label>
+          <div className="my-form-item">
+            <label htmlFor="inputPass" className="form-label">
+              Password
+            </label>
             <input
               autoComplete="off"
-              className="input-box"
+              className="form-input"
               name="password"
               onChange={handleChange}
               required
@@ -79,16 +89,15 @@ const Register = () => {
               id="inputPass"
             />
           </div>
-          <button className="btn-Submit" type="submit">
-            Register
-          </button>
+          <div className="w-3/5 mx-auto">
+            <button className="btn-primary w-full" type="submit">
+              Register
+            </button>
+          </div>
         </form>
-        <div className="more">
+        <div className="text-cyan-300">
           <span>Already a user?</span>
-          <button
-            className="btn-register"
-            onClick={() => navigate("/auth/login")}
-          >
+          <button className="dashed" onClick={() => navigate("/auth/login")}>
             Login
           </button>
         </div>

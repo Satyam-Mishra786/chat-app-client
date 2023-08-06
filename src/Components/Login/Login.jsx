@@ -6,6 +6,7 @@ import axios from "axios";
 
 import { SERVER_URL } from "../..";
 
+
 const Login = () => {
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
@@ -30,38 +31,44 @@ const Login = () => {
   };
   return (
     <>
-      <div className="login">
-        <div className="loginContainer">
-          <h1 className="loginHead">Login User</h1>
-          <form onSubmit={handleLogin} className="wrapper">
-            <div className="fieldContainer">
-              <label htmlFor="inputEmail">Email : </label>
+      <div className="my-container">
+        <div className="my-wrapper">
+          <h1 className="login-head">Login</h1>
+          <form onSubmit={handleLogin} className="my-form">
+            <div className="my-form-item">
+              <label htmlFor="inputEmail" className="form-label">
+                Email
+              </label>
               <input
                 autoComplete="off"
                 required
                 type="text"
-                className="input-box"
+                className="form-input"
                 id="inputEmail"
               />
             </div>
-            <div className="fieldContainer">
-              <label htmlFor="inputPass">Password : </label>
+            <div className="flex flex-col gap-my-form-item">
+              <label htmlFor="inputPass" className=" form-label">
+                Password
+              </label>
               <input
                 autoComplete="off"
                 required
                 type="text"
-                className="input-box"
+                className="form-input"
                 id="inputPass"
               />
             </div>
-            <button className="btn-Submit" type="submit">
-              Login
-            </button>
+            <div className="w-3/5 mx-auto">
+              <button className="btn-primary w-full" type="submit">
+                Login
+              </button>
+            </div>
           </form>
-          <div className="more">
+          <div className="flex-[1]">
             <button
               onClick={() => navigate("/auth/register")}
-              className="btn-register"
+              className="text-sm underline"
             >
               Register?
             </button>
