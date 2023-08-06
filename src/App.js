@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Login from './Components/Login/Login'
 import Register from './Components/Login/Register'
 import UserContext from './UserContext'
+import { QueryClientProvider, QueryClient } from 'react-query'
 
 import {
   Routes, Route,
@@ -10,12 +11,13 @@ import {
 import Message from './Components/Message/Message'
 import Home from './Components/Home/Home'
 
+const queryClient = new QueryClient();
 
 const App = () => {
   const [user, setUser] = useState(null)
 
   return (
-
+    <QueryClientProvider client={queryClient}>
     <UserContext.Provider value={{ user, setUser }}>
       <div className='max-w-md bg-slate-100 mx-auto flex justify-center items-center h-screen'>
       <BrowserRouter>
@@ -34,6 +36,7 @@ const App = () => {
       </BrowserRouter>
       </div>
     </UserContext.Provider>
+    </QueryClientProvider>
   )
 }
 

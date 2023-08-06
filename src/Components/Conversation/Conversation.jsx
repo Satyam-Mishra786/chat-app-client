@@ -21,22 +21,23 @@ const Conversation = ({
   friendNumber,
   setFriendNumber,
   handleSend,
-  // currentChat,
-  // setCurrentChat,
+  currentChat,
+  setCurrentChat,
 }) => {
   const { user } = useContext(UserContext);
   const chatBottomRef = useRef(null);
   const [message, setMessage] = useState("");
   const { conversationId } = useParams();
   const navigate = useNavigate();
-  // const [isLoading, setIsLoading] = useState(false);
 
-  const { data: currentChat, isLoading } = useQuery(
-    ["messages", conversationId],
-    () => fetchMessage(conversationId)
+  const { data, isLoading } = useQuery(["messages", conversationId], () =>
+    fetchMessage(conversationId)
   );
 
-  // console.log(conversationId);
+  useEffect(() => {
+    setCurrentChat(data?.data?.messages);
+    // console.log(data.data.messages);
+  }, [data, setCurrentChat]);
 
   function capitalizeFirstLetter(str) {
     return str?.charAt(0).toUpperCase() + str?.slice(1);
@@ -44,24 +45,6 @@ const Conversation = ({
   useEffect(() => {
     console.log(user);
   }, [user]);
-  // Get message for a conversation
-  // useEffect(() => {
-  //   const getMessages = () => {
-  //     setIsLoading(true);
-  //     axios
-  //       .get(`${SERVER_URL}/api/message/${conversationId}`)
-  //       .then((res) => {
-  //         const data = res.data.messages;
-  //         setIsLoading(false);
-  //         setCurrentChat(data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //         setIsLoading(false);
-  //       });
-  //   };
-  //   getMessages();
-  // }, [setCurrentChat, conversationId]);
 
   useEffect(() => {
     scrollToBottom();
@@ -87,8 +70,11 @@ const Conversation = ({
         <span onClick={() => handleBack()} className="w-8 cursor-pointer">
           <BiLeftArrowAlt size={50} />
         </span>
+        {}
         <span className="text-2xl">
-          {capitalizeFirstLetter(friendList[friendNumber]?.name)}
+          {friendList[friendNumber]?.name
+            ? capitalizeFirstLetter(friendList[friendNumber].name)
+            : ""}
         </span>
       </div>
       {isLoading ? (

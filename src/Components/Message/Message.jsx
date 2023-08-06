@@ -41,7 +41,7 @@ const Message = () => {
     // save message to database
     axios
       .post(`${SERVER_URL}/api/message`, {
-        conversationId: friendList[friendNumber].conversationId,
+        conversationId: friendList[friendNumber]?.conversationId,
         senderId: user.userId,
         msg: messageToSend,
       })

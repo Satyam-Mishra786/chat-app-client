@@ -5,20 +5,26 @@ import UserContext from "../../UserContext";
 
 import { SERVER_URL } from "../..";
 import Spinner from "../Spinner/Spinner";
+import { useQuery } from "react-query";
+
+const fetchFriends = (userId) => {
+  if (!userId) return;
+  return axios.get(`${SERVER_URL}/api/conversation/${userId}`);
+};
 
 const Friends = ({ friendList, handleConversation, setFriendList }) => {
   const { user } = useContext(UserContext);
   const [friendEmail, setFriendEmail] = useState("");
   const [update, setUpdate] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
+  const userId = user?.userId;
+
+  // console.log(user);
 
   const handleAddFriend = () => {
-    const userId = user?.userId;
-
     if (!userId || !friendEmail) {
       alert("Please provide friend email");
       return;
@@ -40,27 +46,37 @@ const Friends = ({ friendList, handleConversation, setFriendList }) => {
       });
   };
 
-  // Load Friend List
+  const { data: friendsData, isLoading } = useQuery(["friends", userId], () =>
+    fetchFriends(userId)
+  );
+
   useEffect(() => {
-    if (!user) return;
+    if (!friendsData) return;
+    // console.log("FriendData : ", friendsData?.data);
+    setFriendList(friendsData?.data?.friends);
+  }, [friendsData, setFriendList, update]);
 
-    const getFriends = () => {
-      setIsLoading(true);
-      axios
-        .get(`${SERVER_URL}/api/conversation/${user?.userId}`)
-        .then((res) => {
-          const data = res.data.friends;
-          setIsLoading(false);
-          setFriendList(data);
-        })
-        .catch((err) => {
-          console.log(err);
-          setIsLoading(false);
-        });
-    };
+  // Load Friend List
+  // useEffect(() => {
+  //   if (!user) return;
 
-    getFriends();
-  }, [user, setFriendList, update]);
+  //   const getFriends = () => {
+  //     setIsLoading(true);
+  //     axios
+  //       .get(`${SERVER_URL}/api/conversation/${user?.userId}`)
+  //       .then((res) => {
+  //         const data = res.data.friends;
+  //         setIsLoading(false);
+  //         setFriendList(data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         setIsLoading(false);
+  //       });
+  //   };
+
+  //   getFriends();
+  // }, [user, setFriendList, update]);
 
   return (
     <div className="w-full h-full overflow-y-scroll  my-scroll-bar rounded-xl">
@@ -70,11 +86,13 @@ const Friends = ({ friendList, handleConversation, setFriendList }) => {
         setFriendEmail={setFriendEmail}
       />
       {isLoading ? (
-        <Spinner />
+        <div className="flex justify-center items-center">
+          <Spinner />
+        </div>
       ) : (
         <div className="flex flex-col py-2  w-full box-shadow-sm border-t-slate-900 bg-sky-300 h-full overflow-none">
           {friendList?.length > 0 &&
-            friendList.map((friend, index) => (
+            friendList?.map((friend, index) => (
               <div
                 className=" font-semibold text-slate-600 cursor-pointer tracking-wide w-full h-[70px] flex items-center py-1 px-2 text-2xl border-2 rounded-lg border-sky-700"
                 key={index}

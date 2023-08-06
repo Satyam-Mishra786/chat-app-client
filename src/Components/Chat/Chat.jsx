@@ -5,11 +5,11 @@ const Chat = ({ currentChat, chatBottomRef }) => {
   const { user } = useContext(UserContext);
   return (
     <div className="bg-slate-100 flex flex-col gap-1 w-full h-[78%] overflow-scroll my-scroll-bar">
-      {currentChat.length === 0 ? (
+      {currentChat?.length === 0 ? (
         <h2 className="text-slate-500">Start Conversation...</h2>
       ) : (
         <ul className="flex flex-col gap-1 p-2">
-          {currentChat.map((e, index) => {
+          {currentChat?.map((e, index) => {
             return e.msg?.length > 0 ? (
               <li
                 className={
@@ -22,7 +22,7 @@ const Chat = ({ currentChat, chatBottomRef }) => {
                 {e.msg}
               </li>
             ) : (
-              <div className="div"></div>
+              <div></div>
             );
           })}
           <li ref={chatBottomRef}></li>
