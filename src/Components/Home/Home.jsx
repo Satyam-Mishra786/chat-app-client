@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -10,15 +11,12 @@ const Home = () => {
         Please Login/Register to Continue
       </h2>
       <div className="flex flex-col gap-7">
-        <button className="btn-primary" onClick={() => navigate("/auth/login")}>
-          Login
-        </button>
-        <button
-          className="btn-primary"
-          onClick={() => navigate("/auth/register")}
-        >
-          Register
-        </button>
+        <Link to="/auth/login">
+          <button className="btn-primary w-full h-full">Login</button>
+        </Link>
+        <Link to="/auth/register">
+          <button className="btn-primary w-full h-full">Register</button>
+        </Link>
       </div>
     </div>
   );

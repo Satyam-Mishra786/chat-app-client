@@ -1,18 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./login.css";
 import { useNavigate } from "react-router";
 import UserContext from "../../UserContext";
 import axios from "axios";
 
 import { SERVER_URL } from "../..";
-
+import { Link } from "react-router-dom";
+import Spinner2 from "../Spinner/Spinner2";
 
 const Login = () => {
+  const [waitForResponse, setWaitForResponse] = useState(false);
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
+    setWaitForResponse(true);
     console.log("Logging in");
     axios
       .post(`${SERVER_URL}/api/auth/login`, {
@@ -27,10 +30,15 @@ const Login = () => {
       .catch((err) => {
         console.log(err);
         alert("Something went wrong");
+      })
+      .finally(() => {
+        setWaitForResponse(false);
       });
   };
   return (
     <>
+      {waitForResponse && <Spinner2 />}
+
       <div className="my-container">
         <div className="my-wrapper">
           <h1 className="login-head">Login</h1>
@@ -66,12 +74,9 @@ const Login = () => {
             </div>
           </form>
           <div className="flex-[1]">
-            <button
-              onClick={() => navigate("/auth/register")}
-              className="text-sm underline"
-            >
-              Register?
-            </button>
+            <Link to="/auth/register">
+              <button className="text-sm underline">Register?</button>
+            </Link>
           </div>
         </div>
       </div>

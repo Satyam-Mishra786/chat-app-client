@@ -11,7 +11,7 @@
     }
 
     .my-container{
-        @apply py-11 container flex flex-col  justify-around items-center my-auto h-4/5 border-solid border-2 border-stone-900 bg-sky-500 px-3.5 rounded-xl;
+        @apply py-11 container flex flex-col  justify-around items-center my-auto h-full border-solid border-2 border-stone-900 bg-sky-500 px-3.5 rounded-xl;
     }
 
     .chat-item{
