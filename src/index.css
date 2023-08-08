@@ -4,18 +4,22 @@
 
 @layer components {
     .btn-primary {
-      @apply min-w-fit py-2 px-4 border-[1px] bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+      @apply min-w-fit py-2 px-4 border-[1px] bg-gradient-to-r from-cyan-900 to-blue-600  text-white font-semibold rounded-lg shadow-md hover:from-blue-700 hover:to-cyan-600 transition hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
     }
     .btn-primary-sm {
-      @apply min-w-fit py-1 text-sm px-4 border-[1px] bg-blue-500 text-white  rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+      @apply min-w-fit py-1 text-sm px-4 border-[1px] bg-gradient-to-r from-cyan-900 to-blue-600 text-white  rounded-lg shadow-md hover:from-blue-700 hover:to-cyan-600 transition hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
     }
 
     .my-container{
-        @apply py-11 container flex flex-col  justify-around items-center my-auto h-full border-solid border-2 border-stone-900 bg-sky-500 px-3.5 rounded-xl;
+        @apply py-11 container flex flex-col  justify-around items-center my-auto h-full border-solid border-2 border-stone-900 bg-gradient-to-b from-cyan-500 to-blue-500 px-3.5 rounded-md;
     }
 
     .chat-item{
       @apply max-w-[60%] rounded-md text-slate-100 self-start py-[3px] px-2 text-lg;
+    }
+
+    .my-bg-gradient{
+      @apply bg-gradient-to-b from-cyan-500 to-blue-500;
     }
 }
 

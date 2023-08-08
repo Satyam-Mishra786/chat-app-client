@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { SERVER_URL } from "../..";
 import { Link } from "react-router-dom";
 import Spinner2 from "../Spinner/Spinner2";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [aboutUser, setAboutUser] = useState({
@@ -37,11 +38,11 @@ const Register = () => {
         password: aboutUser.password,
       })
       .then((res) => {
-        alert("User Created Successfully");
+        toast.success("User Created Successfully");
         navigate("/auth/login");
       })
       .catch((err) => {
-        alert("Something went wrong!!!");
+        toast.error("Something went wrong!!!");
       })
       .finally(() => {
         setWaitForResponse(false);

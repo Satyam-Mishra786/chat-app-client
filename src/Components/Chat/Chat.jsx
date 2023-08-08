@@ -4,7 +4,7 @@ import UserContext from "../../UserContext";
 const Chat = ({ currentChat, chatBottomRef }) => {
   const { user } = useContext(UserContext);
   return (
-    <div className="bg-slate-100 flex flex-col gap-1 w-full h-[78%] overflow-scroll my-scroll-bar">
+    <div className="bg-gradient-to-b from-cyan-200 to-green-200 flex flex-col gap-1 w-full h-[78%] overflow-scroll my-scroll-bar">
       {currentChat?.length === 0 ? (
         <h2 className="text-slate-500">Start Conversation...</h2>
       ) : (
@@ -15,7 +15,7 @@ const Chat = ({ currentChat, chatBottomRef }) => {
                 className={
                   e.sendBy === user.userId
                     ? "chat-item bg-green-600 self-end"
-                    : "chat-item self-start  bg-cyan-700 "
+                    : "chat-item self-start  bg-rose-500 "
                 }
                 key={index}
               >

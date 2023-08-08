@@ -82,7 +82,7 @@ const Message = () => {
   }, [friendNumber, friendList]);
 
   return (
-    <div className="border-solid border-2 border-stone-900 h-4/5 w-full  rounded-xl">
+    <div className="border-solid border-2 border-stone-900 h-screen w-full">
       <Routes>
         <Route
           path="friends"

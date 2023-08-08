@@ -18,12 +18,12 @@ const AddFriend = ({ handleAddFriend, friendEmail, setFriendEmail }) => {
     alert("Logged Out");
   };
   return (
-    <div className="flex flex-col justify-start items-start w-full h-fit p-3 bg-green-300 rounded-tl-xl rounded-tr-xl">
+    <div className="flex flex-col justify-start items-start w-full h-1/5 p-3 bg-gradient-to-b from-blue-300 to-green-400   rounded-tl-xl rounded-tr-xl">
       <div className="flex flex-row gap-2 items-center mb-2">
         <div className="w-11 h-11">
           <img src={UserImg} alt="" className="w-full h-full rounded-full" />
         </div>
-        <h1 className="text-3xl text-slate-500">
+        <h1 className="text-3xl text-slate-200">
           {capitalizeFirstLetter(user?.username)}
         </h1>
       </div>
@@ -36,7 +36,7 @@ const AddFriend = ({ handleAddFriend, friendEmail, setFriendEmail }) => {
           placeholder="Friend's Email.."
         />
       </div>
-      <div className="flex flex-wrap gap-1">
+      <div className="flex flex-wrap gap-3">
         <button
           className="btn-primary-sm"
           onClick={() => handleAddFriend(friendEmail)}

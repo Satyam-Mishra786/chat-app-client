@@ -1,16 +1,15 @@
 import React from "react";
-import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const navigate = useNavigate();
   return (
     <div className="my-container">
-      <h1 className="text-4xl text-sky-200 ">Welcome to Sampark App</h1>
-      <h2 className="text-xl  text-green-300">
-        Please Login/Register to Continue
+      <h1 className="text-4xl text-slate-100 ">Welcome to Sampark App</h1>
+      <h2 className="text-xl  text-green-300 flex flex-col items-center">
+        <p>Please Login/Register 😊</p>
+        <p>to Continue</p>
       </h2>
-      <div className="flex flex-col gap-7">
+      <div className="flex flex-col gap-7 w-1/2">
         <Link to="/auth/login">
           <button className="btn-primary w-full h-full">Login</button>
         </Link>

@@ -10,6 +10,7 @@ import {
 } from "react-router-dom"
 import Message from './Components/Message/Message'
 import Home from './Components/Home/Home'
+import { ToastContainer } from 'react-toastify'
 
 const queryClient = new QueryClient();
 
@@ -19,7 +20,8 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
     <UserContext.Provider value={{ user, setUser }}>
-      <div className='max-w-md bg-slate-100 mx-auto flex justify-center items-center h-screen'>
+        <div className='max-w-md my-bg-gradient mx-auto flex justify-center items-center h-screen'>
+          <ToastContainer position='top-center' />
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />

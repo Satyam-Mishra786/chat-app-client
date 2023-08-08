@@ -7,6 +7,7 @@ import axios from "axios";
 import { SERVER_URL } from "../..";
 import { Link } from "react-router-dom";
 import Spinner2 from "../Spinner/Spinner2";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [waitForResponse, setWaitForResponse] = useState(false);
@@ -25,11 +26,12 @@ const Login = () => {
       .then((res) => {
         const data = res.data;
         setUser(data.user);
+        toast.success("Login Successful");
         navigate("/chat");
       })
       .catch((err) => {
         console.log(err);
-        alert("Something went wrong");
+        toast.error("Something went wrong");
       })
       .finally(() => {
         setWaitForResponse(false);
@@ -73,9 +75,12 @@ const Login = () => {
               </button>
             </div>
           </form>
-          <div className="flex-[1]">
+          <div className="">
+            <span>Create Account 👉</span>
             <Link to="/auth/register">
-              <button className="text-sm underline">Register?</button>
+              <button className="text-lg underline text-slate-50">
+                Register?
+              </button>
             </Link>
           </div>
         </div>

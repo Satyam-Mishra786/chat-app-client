@@ -7,6 +7,9 @@ import { SERVER_URL } from "../..";
 import Spinner from "../Spinner/Spinner";
 import { useQuery } from "react-query";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const fetchFriends = (userId) => {
   if (!userId) return;
   return axios.get(`${SERVER_URL}/api/conversation/${userId}`);
@@ -22,11 +25,9 @@ const Friends = ({ friendList, handleConversation, setFriendList }) => {
   }
   const userId = user?.userId;
 
-  // console.log(user);
-
   const handleAddFriend = () => {
     if (!userId || !friendEmail) {
-      alert("Please provide friend email");
+      toast.warning("Provide Valid Email !");
       return;
     }
 
@@ -37,12 +38,13 @@ const Friends = ({ friendList, handleConversation, setFriendList }) => {
       })
       .then((res) => {
         setUpdate((prev) => !prev);
-        setFriendEmail("");
-        alert("Friend Added successfully");
+        toast.success("Friend Added !");
       })
       .catch((err) => {
+        toast.error("Friendship Unsuccessful");
+      })
+      .finally(() => {
         setFriendEmail("");
-        alert("Friendship unsuccessful");
       });
   };
 
@@ -52,58 +54,45 @@ const Friends = ({ friendList, handleConversation, setFriendList }) => {
 
   useEffect(() => {
     if (!friendsData) return;
-    // console.log("FriendData : ", friendsData?.data);
     setFriendList(friendsData?.data?.friends);
   }, [friendsData, setFriendList, update]);
 
-  // Load Friend List
-  // useEffect(() => {
-  //   if (!user) return;
-
-  //   const getFriends = () => {
-  //     setIsLoading(true);
-  //     axios
-  //       .get(`${SERVER_URL}/api/conversation/${user?.userId}`)
-  //       .then((res) => {
-  //         const data = res.data.friends;
-  //         setIsLoading(false);
-  //         setFriendList(data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //         setIsLoading(false);
-  //       });
-  //   };
-
-  //   getFriends();
-  // }, [user, setFriendList, update]);
-
   return (
-    <div className="w-full h-full overflow-y-scroll  my-scroll-bar rounded-xl">
-      <AddFriend
-        handleAddFriend={handleAddFriend}
-        friendEmail={friendEmail}
-        setFriendEmail={setFriendEmail}
-      />
-      {isLoading ? (
-        <div className="flex justify-center items-center">
-          <Spinner />
-        </div>
-      ) : (
-        <div className="flex flex-col py-2  w-full box-shadow-sm border-t-slate-900 bg-sky-300 h-full overflow-none">
-          {friendList?.length > 0 &&
-            friendList?.map((friend, index) => (
-              <div
-                className=" font-semibold text-slate-600 cursor-pointer tracking-wide w-full h-[70px] flex items-center py-1 px-2 text-2xl border-2 rounded-lg border-sky-700"
-                key={index}
-                onClick={() => handleConversation(index)}
-              >
-                {capitalizeFirstLetter(friend?.name)}
+    <>
+      <ToastContainer />
+      <div className="w-full h-full overflow-y-scroll  my-scroll-bar rounded-md">
+        <AddFriend
+          handleAddFriend={handleAddFriend}
+          friendEmail={friendEmail}
+          setFriendEmail={setFriendEmail}
+        />
+        {isLoading ? (
+          <div className="flex justify-center items-center h-4/5 my-bg-gradient">
+            <Spinner />
+          </div>
+        ) : (
+          <div className="flex flex-col py-2 overflow-y-scroll my-scroll-bar gap-1 px-2 w-full box-shadow-sm border-t-slate-900 my-bg-gradient h-4/5 overflow-none">
+            {friendList?.length > 0 &&
+              friendList?.map((friend, index) => (
+                <div
+                  className="font-semibold border-slate-300 border-[1px] bg-gradient-to-r from-cyan-600  to-sky-800 text-slate-100 cursor-pointer tracking-wide w-full min-h-[70px] h-[70px] flex items-center py-1 px-2 text-2xl rounded-lg"
+                  key={index}
+                  onClick={() => handleConversation(index)}
+                >
+                  {capitalizeFirstLetter(friend?.name)}
+                </div>
+              ))}
+            {!friendList?.length > 0 && (
+              <div className="text-xl h-full w-full text-green-900 flex flex-col justify-center items-center">
+                <p>Add Friend 🙍‍♂️</p>
+                <p>&</p>
+                <p>Start Your Conversation 👋</p>
               </div>
-            ))}
-        </div>
-      )}
-    </div>
+            )}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
